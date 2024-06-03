@@ -19,7 +19,7 @@ class ViewController: UIViewController
         }
     }
 
-    private var emojiChoices = ["🦁", "🐵", "🦊", "🐯", "🐱", "🐶", "🐮", "🐷", "🐭"]
+    private static var emojiChoices = ["🦁", "🐵", "🦊", "🐯", "🐱", "🐶", "🐮", "🐷", "🐭"]
 
     private var emoji = [Int : String]()
 
@@ -32,8 +32,8 @@ class ViewController: UIViewController
     }
 
     private func updateUI() {
-        for index in cardButtons.indices {
-            let button = cardButtons[index]
+        for index in self.cardButtons.indices {
+            let button = self.cardButtons[index]
             let card = game.cards[index]
 
             if card.isFaceUp {
@@ -47,9 +47,9 @@ class ViewController: UIViewController
     }
 
     private func emoji(for card: Card) -> String {
-        if emoji[card.identifier] == nil, emojiChoices.count > 0 {
-            let randIndex = Int(arc4random_uniform(UInt32(emojiChoices.count)))
-            emoji[card.identifier] = emojiChoices.remove(at: randIndex)
+        if emoji[card.identifier] == nil, Self.emojiChoices.count > 0 {
+            let randIndex = Int.random(in: 0..<Self.emojiChoices.count)
+            emoji[card.identifier] = Self.emojiChoices.remove(at: randIndex)
         }
 
         return emoji[card.identifier] ?? "?"
