@@ -11,6 +11,7 @@ struct Card
 {
     var isFaceUp = false
     var isMatched = false
+    // identifier is an index of emoji in the theme
     let identifier: Int
 
     static var identifierFactory = 0

@@ -7,9 +7,11 @@
 
 import Foundation
 
-final class Concentration
-{
+final class Concentration {
+
     var cards = [Card]()
+    var flipCount = 0
+    var score = 0
     private var indexOfOneFaceUpCard: Int?
 
     init(numberOfPairsOfCards: Int) {
@@ -18,29 +20,44 @@ final class Concentration
             self.cards += [card, card]
         }
 
-        // TODO: shuffle the cards
+        self.cards.shuffle()
     }
 
     func chooseCard(at index: Int) {
+        self.flipCount += 1
         if !self.cards[index].isMatched {
+            // find an index of previously chosen card
+            // and make sure that it is not the same as current chosen card
             if let matchIndex = indexOfOneFaceUpCard, matchIndex != index {
                 // check if cards match
-                if self.cards[matchIndex].identifier == cards[index].identifier {
-                    self.cards[matchIndex].isMatched = true
-                    self.cards[index].isMatched = true
+                if self.cards[matchIndex].identifier == self.cards[index].identifier {
+                    setCardToMatched(at: matchIndex)
+                    setCardToMatched(at: index)
+                    score += 2
                 }
-                self.cards[index].isFaceUp = true
+                else {
+                    // no match penalty
+                    score -= 1
+                }
                 indexOfOneFaceUpCard = nil
-            } 
+            }
             else {
                 // either no cards or two cards face up
-                for flipDownIndex in self.cards.indices {
-                    self.cards[flipDownIndex].isFaceUp = false
-                }
-
-                self.cards[index].isFaceUp = true
+                turnAllFaceDown()
                 indexOfOneFaceUpCard = index
+                score -= 1
             }
+
+            self.cards[index].isFaceUp = true
         }
     }
+
+    private func setCardToMatched(at index: Int) {
+        self.cards[index].isMatched = true
+    }
+
+    private func turnAllFaceDown() {
+        self.cards.indices.forEach { self.cards[$0].isFaceUp = false }
+    }
+
 }
