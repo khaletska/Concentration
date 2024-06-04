@@ -7,8 +7,8 @@
 
 import Foundation
 
-final class Concentration
-{
+final class Concentration {
+    
     var cards = [Card]()
     var flipCount = 0
     private var indexOfOneFaceUpCard: Int?
@@ -34,7 +34,7 @@ final class Concentration
                     setCardToMatched(at: index)
                 }
                 indexOfOneFaceUpCard = nil
-            } 
+            }
             else {
                 // either no cards or two cards face up
                 turnAllFaceDown()
@@ -52,4 +52,5 @@ final class Concentration
     private func turnAllFaceDown() {
         self.cards.indices.forEach { self.cards[$0].isFaceUp = false }
     }
+
 }

@@ -7,19 +7,22 @@
 
 import UIKit
 
-class ViewController: UIViewController
-{
+class ViewController: UIViewController {
+
     @IBOutlet private weak var flipCountLabel: UILabel!
     @IBOutlet private var cardButtons: [UIButton]!
 
-    private lazy var game: Concentration = makeNewGame()
-
-    private static var emojiChoices = ["🧑‍🎓" , "🧑‍🏫", "🧑‍⚖️", "🧑‍🌾", "🧑‍🍳", "🧑‍🔧", "🧑‍🔬", "🧑‍💻", "🧑‍🚀", "🧑‍🚒", "🧑‍✈️", "👮", "🕵️", "💂", "🥷", "👷"] // professions
-
+    private var game: Concentration!
+    private var emojiChoices: Array<String>!
     private var emoji = [Int : String]()
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        startNewGame()
+    }
+
     @IBAction private func newGameButtonPressed(_ sender: UIButton) {
-        self.game = makeNewGame()
+        startNewGame()
         updateUI()
     }
 
@@ -30,8 +33,9 @@ class ViewController: UIViewController
         }
     }
 
-    private func makeNewGame() -> Concentration {
-        Concentration(numberOfPairsOfCards: (self.cardButtons.count + 1) / 2)
+    private func startNewGame() {
+        self.game = Concentration(numberOfPairsOfCards: (self.cardButtons.count + 1) / 2)
+        self.emojiChoices = Self.themes.randomElement() ?? []
     }
 
     private func updateUI() {
@@ -51,12 +55,29 @@ class ViewController: UIViewController
     }
 
     private func emoji(for card: Card) -> String {
-        if emoji[card.identifier] == nil, Self.emojiChoices.count > 0 {
-            let randIndex = Int.random(in: 0..<Self.emojiChoices.count)
-            emoji[card.identifier] = Self.emojiChoices.remove(at: randIndex)
+        if emoji[card.identifier] == nil, self.emojiChoices.count > 0 {
+            let randIndex = Int.random(in: 0..<self.emojiChoices.count)
+            emoji[card.identifier] = self.emojiChoices.remove(at: randIndex)
         }
 
         return emoji[card.identifier] ?? "?"
     }
+
 }
 
+extension ViewController {
+
+    private static var themes = [
+        ["🧑‍🎓" , "🧑‍🏫", "🧑‍⚖️", "🧑‍🌾", "🧑‍🍳", "🧑‍🔧", "🧑‍🔬", "🧑‍💻", "🧑‍🚀", "🧑‍🚒", "🧑‍✈️", "👮", "🕵️", "💂", "🥷", "👷"], // professions
+        ["🍞", "🥐", "🥖", "🥨", "🥯", "🥞", "🧇", "🍩", "🍪"], // pastry
+        ["🐳", "🦭", "🐬", "🐟", "🐠", "🐡", "🦈", "🐙", "🪼"], // ocean
+        ["🐥", "🕊️", "🦆", "🦅", "🦉", "🦜", "🦚", "🦩", "🐓"], // birds
+        ["🦸", "🦹", "🧙", "🧚", "🧛", "🧜", "🧞", "🧝‍♀️", "🧟"], // creatures
+        ["🍔", "🍟", "🍕", "🌭", "🌮", "🌯", "🍿", "🍣", "🍜"], // street food
+        ["❤️", "🩷", "🧡", "💛", "💚", "💙", "🩵", "💜", "🤎"], // colors
+        ["🍅", "🍆", "🥔", "🥕", "🌽", "🫑", "🥒", "🥦", "🍄‍🟫"], // veggies
+        ["🍇", "🍉", "🥝", "🍌", "🍓", "🍍", "🥥", "🍒", "🍑"], // fruites
+        ["🦁", "🐵", "🦊", "🐯", "🐱", "🐶", "🐮", "🐷", "🐭"], // animals
+    ]
+
+}
