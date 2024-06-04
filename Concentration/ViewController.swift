@@ -13,11 +13,6 @@ class ViewController: UIViewController
     @IBOutlet private var cardButtons: [UIButton]!
 
     private lazy var game: Concentration = makeNewGame()
-    private var flipCount = 0 {
-        didSet {
-            self.flipCountLabel.text = "Flips: \(self.flipCount)"
-        }
-    }
 
     private static var emojiChoices = ["🧑‍🎓" , "🧑‍🏫", "🧑‍⚖️", "🧑‍🌾", "🧑‍🍳", "🧑‍🔧", "🧑‍🔬", "🧑‍💻", "🧑‍🚀", "🧑‍🚒", "🧑‍✈️", "👮", "🕵️", "💂", "🥷", "👷"] // professions
 
@@ -29,7 +24,6 @@ class ViewController: UIViewController
     }
 
     @IBAction private func touchCard(_ sender: UIButton) {
-        self.flipCount += 1
         if let cardIndex = self.cardButtons.firstIndex(of: sender) {
             game.chooseCard(at: cardIndex)
             updateUI()
@@ -37,8 +31,7 @@ class ViewController: UIViewController
     }
 
     private func makeNewGame() -> Concentration {
-        flipCount = 0
-        return Concentration(numberOfPairsOfCards: (self.cardButtons.count + 1) / 2)
+        Concentration(numberOfPairsOfCards: (self.cardButtons.count + 1) / 2)
     }
 
     private func updateUI() {
@@ -54,6 +47,7 @@ class ViewController: UIViewController
                 button.backgroundColor = card.isMatched ? UIColor.clear : UIColor.systemOrange
             }
         }
+        self.flipCountLabel.text = "Flips: \(self.game.flipCount)"
     }
 
     private func emoji(for card: Card) -> String {

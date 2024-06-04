@@ -10,6 +10,7 @@ import Foundation
 final class Concentration
 {
     var cards = [Card]()
+    var flipCount = 0
     private var indexOfOneFaceUpCard: Int?
 
     init(numberOfPairsOfCards: Int) {
@@ -22,6 +23,7 @@ final class Concentration
     }
 
     func chooseCard(at index: Int) {
+        self.flipCount += 1
         if !self.cards[index].isMatched {
             // find an index of previously chosen card
             // and make sure that it is not the same as current chosen card
