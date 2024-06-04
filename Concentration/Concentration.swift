@@ -8,9 +8,10 @@
 import Foundation
 
 final class Concentration {
-    
+
     var cards = [Card]()
     var flipCount = 0
+    var score = 0
     private var indexOfOneFaceUpCard: Int?
 
     init(numberOfPairsOfCards: Int) {
@@ -32,6 +33,11 @@ final class Concentration {
                 if self.cards[matchIndex].identifier == self.cards[index].identifier {
                     setCardToMatched(at: matchIndex)
                     setCardToMatched(at: index)
+                    score += 2
+                }
+                else {
+                    // no match penalty
+                    score -= 1
                 }
                 indexOfOneFaceUpCard = nil
             }
@@ -39,6 +45,7 @@ final class Concentration {
                 // either no cards or two cards face up
                 turnAllFaceDown()
                 indexOfOneFaceUpCard = index
+                score -= 1
             }
 
             self.cards[index].isFaceUp = true

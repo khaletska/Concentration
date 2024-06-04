@@ -10,6 +10,7 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet private weak var flipCountLabel: UILabel!
+    @IBOutlet private weak var scoreLabel: UILabel!
     @IBOutlet private var cardButtons: [UIButton]!
 
     private var game: Concentration!
@@ -52,6 +53,7 @@ class ViewController: UIViewController {
             }
         }
         self.flipCountLabel.text = "Flips: \(self.game.flipCount)"
+        self.scoreLabel.text = "Score: \(self.game.score)"
     }
 
     private func emoji(for card: Card) -> String {
