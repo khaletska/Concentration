@@ -7,12 +7,6 @@
 
 import UIKit
 
-struct Theme {
-    let backgroundColor: UIColor
-    let cardBackColor: UIColor
-    var emojis: Array<String>
-}
-
 class ViewController: UIViewController {
 
     @IBOutlet weak var newGameButton: UIButton!
@@ -42,7 +36,7 @@ class ViewController: UIViewController {
 
     private func startNewGame() {
         self.game = Concentration(numberOfPairsOfCards: (self.cardButtons.count + 1) / 2)
-        self.theme = Self.themes.randomElement() ?? nil
+        self.theme = .getRandom()
         applyTheme()
         updateUI()
     }
@@ -80,22 +74,5 @@ class ViewController: UIViewController {
 
         return emoji[card.identifier] ?? "?"
     }
-
-}
-
-extension ViewController {
-
-    private static var themes: Array<Theme> = [
-        Theme(backgroundColor: UIColor.darkGray, cardBackColor: UIColor.systemYellow, emojis: ["🧑‍🎓" , "🧑‍🏫", "🧑‍⚖️", "🧑‍🌾", "🧑‍🍳", "🧑‍🔧", "🧑‍🔬", "🧑‍💻", "🧑‍🚀", "🧑‍🚒", "🧑‍✈️", "👮", "🕵️", "💂", "🥷", "👷"]),
-        Theme(backgroundColor: UIColor.systemBrown, cardBackColor: UIColor.brown, emojis: ["🍞", "🥐", "🥖", "🥨", "🥯", "🥞", "🧇", "🍩", "🍪"]), // pastry
-        Theme(backgroundColor: UIColor.systemBlue, cardBackColor: UIColor.systemTeal, emojis: ["🐳", "🦭", "🐬", "🐟", "🐠", "🐡", "🦈", "🐙", "🪼"]), // ocean
-        Theme(backgroundColor: UIColor.systemIndigo, cardBackColor: UIColor.systemPink, emojis: ["🦸", "🦹", "🧙", "🧚", "🧛", "🧜", "🧞", "🧝‍♀️", "🧟"]), // creatures
-        Theme(backgroundColor: UIColor.systemGray, cardBackColor: UIColor.systemRed, emojis: ["🍔", "🍟", "🍕", "🌭", "🌮", "🌯", "🍿", "🍣", "🍜"]), // street food
-        Theme(backgroundColor: UIColor.darkGray, cardBackColor: UIColor.gray, emojis: ["❤️", "🩷", "🧡", "💛", "💚", "💙", "🩵", "💜", "🤎"]), // colors
-        Theme(backgroundColor: UIColor.systemGray, cardBackColor: UIColor.systemGreen, emojis: ["🐥", "🕊️", "🦆", "🦅", "🦉", "🦜", "🦚", "🦩", "🐓"]), // birds
-        Theme(backgroundColor: UIColor.systemGray, cardBackColor: UIColor.systemGreen, emojis: ["🍅", "🍆", "🥔", "🥕", "🌽", "🫑", "🥒", "🥦", "🍄‍🟫"]), // veggies
-        Theme(backgroundColor: UIColor.systemGray, cardBackColor: UIColor.systemGreen, emojis: ["🍇", "🍉", "🥝", "🍌", "🍓", "🍍", "🥥", "🍒", "🍑"]), // fruites
-        Theme(backgroundColor: UIColor.systemGray, cardBackColor: UIColor.systemGreen, emojis: ["🦁", "🐵", "🦊", "🐯", "🐱", "🐶", "🐮", "🐷", "🐭"]), // animals
-    ]
 
 }
